@@ -51,10 +51,26 @@ try:
             WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@class='grid-result-title']"))).text
             print("ihale sistemde yok")
             boya.fill = kirmizi
+                 
         except:
-            print("ihale bulundu")
-            boya.fill = yesil
-      
+             try:
+                    if WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[class='badges'] span:nth-child(1)"))).text in "Katılıma açık": #! ihale açık
+                        print("İhale ==> Katılma açık ")
+                        boya.fill = yesil
+                        wb.save("iptalTest.xlsx")
+                    elif WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[class='badges'] span:nth-child(1)"))).text in "İhale İptal Edilmiş": #! ihale iptal
+                        print("İhale ==> katılıma kapalı ")   
+                        iptal.append(deger)
+                        boya.fill = kirmizi
+                        wb.save("iptalTest.xlsx")
+                    else:
+                        print("İhale bulunamadı..")   
+                        boya.fill = gri
+                        wb.save("iptalTest.xlsx")
+
+             except ValueError as e:
+                 print("Err.." + str(e))
+                
 
 except ValueError as e :
     print("Hata kodu: " + str(e))
