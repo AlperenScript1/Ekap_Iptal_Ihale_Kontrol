@@ -46,15 +46,11 @@ try:
         searchButton.click()
         print("find element: searchButton")
         
-        #ihale var mı ? kontrolü
+        #ihale var mı ? kontrolü 
         try:
             WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@class='grid-result-title']"))).text
             print("ihale sistemde yok")
             boya.fill = kirmizi
-            try:
-                WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "ihaleCard"))).click()
-
-
         except:
             print("ihale bulundu")
             boya.fill = yesil
